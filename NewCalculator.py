@@ -1,3 +1,4 @@
+import math
 import tkinter as tk
 from tkinter import ttk
 from math import sin, cos, tan, log, log10, radians, pi, e
@@ -76,10 +77,6 @@ class BasicCalculatorFrame(tk.Frame):
         self.calculation_history_listbox = tk.Listbox(self)
         self.calculation_history_listbox.grid(row=7, column=0, columnspan=3)
 
-        # Drawing canvas
-        # self.drawing_canvas = tk.Canvas(self, width=150, height=100, bg='white
-        # self.drawing_canvas.grid(row=7, column=3, columnspan=2)
-
     def on_button_click(self, text):
         if text == 'C':
             self.entry.delete(0, 'end')
@@ -116,23 +113,12 @@ class ScientificCalculatorFrame(tk.Frame):
         self.display_var = tk.StringVar()
         self.display_var.set("0")
 
-        self.display_text = tk.Text(self, wrap=tk.NONE, width=20, height=2)
-        self.display_text.grid(row=0, column=0, columnspan=4)
+        self.display_label = tk.Label(
+            self, textvariable=self.display_var, width=20, height=2, anchor='e')
+        self.display_label.grid(row=0, column=0, columnspan=6)
 
-        self.display_scrollbar = tk.Scrollbar(
-            self, orient=tk.HORIZONTAL, command=self.display_text.xview)
-        self.display_scrollbar.grid(row=1, column=0, columnspan=4, sticky='ew')
-        self.display_text.configure(xscrollcommand=self.display_scrollbar.set)
-
-        # Replace the Entry widget with a Text widget
-        self.entry = tk.Text(self, width=20, height=1, wrap=tk.NONE)
-        self.entry.grid(row=2, column=0, columnspan=4)
-
-        # Add a horizontal scrollbar to the entry Text widget
-        self.entry_scrollbar = tk.Scrollbar(
-            self, orient=tk.HORIZONTAL, command=self.entry.xview)
-        self.entry_scrollbar.grid(row=3, column=0, columnspan=4, sticky='ew')
-        self.entry.configure(xscrollcommand=self.entry_scrollbar.set)
+        self.entry = tk.Entry(self, width=20)
+        self.entry.grid(row=1, column=0, columnspan=6)
 
         buttons = [
             ('sin', 2, 0), ('cos', 2, 1), ('tan', 2, 2),
@@ -145,69 +131,65 @@ class ScientificCalculatorFrame(tk.Frame):
                 self, text=text, command=lambda t=text: self.on_button_click(t))
             button.grid(row=row, column=column)
 
-        self.angle_mode = tk.StringVar()
-        self.angle_mode.set("DEG")
+        # Images
+        # self.img_label = tk.Label(self, image=img)
+        # self.img_label.grid(row=5, column=0)
 
-        self.angle_mode_radio_deg = tk.Radiobutton(
-            self, text="Degrees", variable=self.angle_mode, value="DEG")
-        self.angle_mode_radio_deg.grid(row=4, column=2)
+        # Checkboxes
+        self.var1 = tk.IntVar()
+        self.check1 = tk.Checkbutton(
+            self, text="Multiply the value by 2", variable=self.var1)
+        self.check1.grid(row=5, column=1)
 
-        self.angle_mode_radio_rad = tk.Radiobutton(
-            self, text="Radians", variable=self.angle_mode, value="RAD")
-        self.angle_mode_radio_rad.grid(row=4, column=3)
-
-        # Drop-down menu for mathematical constants
-        self.math_constants_var = tk.StringVar()
-        self.math_constants_var.set("Select constant")
-        self.math_constants_options = {'pi': pi, 'e': e}
-        self.math_constants_menu = ttk.OptionMenu(
-            self, self.math_constants_var, *self.math_constants_options.keys(), command=self.insert_constant)
-        self.math_constants_menu.grid(row=5, column=0, columnspan=2)
-
-        # Scrollbar for display and entry widgets
-        self.entry_scrollbar = tk.Scrollbar(
-            self, orient=tk.HORIZONTAL, command=self.entry.xview)
-        self.entry_scrollbar.grid(row=2, column=0, columnspan=4, sticky='ew')
-        self.entry.configure(xscrollcommand=self.entry_scrollbar.set)
-
-        self.display_scrollbar = tk.Scrollbar(
-            self, orient=tk.HORIZONTAL, command=self.display_text.xview)
-        self.display_scrollbar.grid(row=6, column=0, columnspan=4, sticky='ew')
-        self.display_text.configure(xscrollcommand=self.display_scrollbar.set)
+        # Radio buttons
+        self.var2 = tk.StringVar()
+        self.radio1 = tk.Radiobutton(
+            self, text="Degrees", variable=self.var2, value="DEG")
+        self.radio1.grid(row=5, column=2)
+        self.radio2 = tk.Radiobutton(
+            self, text="Radians", variable=self.var2, value="RAD")
+        self.radio2.grid(row=5, column=3)
 
     def on_button_click(self, text):
         if text == 'C':
-            self.entry.delete('1.0', tk.END)
+            self.entry.delete(0, 'end')
             self.display_var.set("0")
         elif text == '=':
             try:
-                result = self.eval_expr(self.entry.get('1.0', tk.END).strip())
-                self.display_text.delete('1.0', tk.END)
-                self.display_text.insert(tk.END, str(result))
+                result = self.calculate()
+                if self.var1.get() == 1:  # check if checkbox is selected
+                    result *= 2  # multiply result by 2 if checkbox is selected
+                self.display_var.set(str(result))
             except Exception as e:
-                self.display_text.delete('1.0', tk.END)
-                self.display_text.insert(tk.END, "Error")
+                self.display_var.set("Error")
         else:
-            self.entry.insert(tk.END, text)
-
-    def eval_expr(self, expr):
-        def trig_func(func, angle):
-            if self.angle_mode.get() == "DEG":
-                return func(radians(angle))
+            # Add scientific calculator functionality
+            if text in ['sin', 'cos', 'tan', 'log', 'ln']:
+                if self.entry.get() == '':
+                    self.entry.insert('end', '0')
+                func = getattr(math, text)
+                angle = float(self.entry.get())
+                if self.var2.get() == 'DEG':
+                    angle = math.radians(angle)
+                result = func(angle)
+                self.entry.delete(0, 'end')
+                self.entry.insert(0, str(result))
+            elif text == '^':
+                self.entry.insert('end', '**')
             else:
-                return func(angle)
+                self.entry.insert('end', text)
 
-        expr = expr.replace('sin', 'trig_func(sin,')
-        expr = expr.replace('cos', 'trig_func(cos,')
-        expr = expr.replace('tan', 'trig_func(tan,')
-        expr = expr.replace('log', 'log10(')
-        expr = expr.replace('ln', 'log(')
-        expr = expr.replace('^', '**')
-        return eval(expr)
+    def calculate(self):
+        expression = self.entry.get()
+        if '^' in expression:
+            expression = expression.replace('^', '**')
+        result = eval(expression)
+        return result
 
-    def insert_constant(self, *args):
-        self.entry.insert(
-            tk.END, self.math_constants_options[self.math_constants_var.get()])
+    def evaluate_trigonometric(self, func, angle):
+        if self.angle_mode.get() == 'DEG':
+            angle = radians(angle)
+        return func(angle)
 
 
 class CurrencyConverterFrame(tk.Frame):
@@ -250,6 +232,12 @@ class CurrencyConverterFrame(tk.Frame):
             self, text="Convert", command=self.convert_currency)
         self.convert_button.grid(row=1, column=1)
 
+        # Round result checkbox
+        self.var2 = tk.BooleanVar()
+        self.check2 = tk.Checkbutton(
+            self, text="Round Result", variable=self.var2)
+        self.check2.grid(row=2, column=1)
+
     def convert_currency(self):
         # Dummy conversion rates (replace with real API calls)
         conversion_rates = {
@@ -266,6 +254,10 @@ class CurrencyConverterFrame(tk.Frame):
             to_currency = self.currency_var_to.get()
 
             result = amount * conversion_rates[from_currency][to_currency]
+
+            if self.var2.get():
+                result = round(result)
+
             self.display_var.set(f'{result:.2f}')
         except ValueError:
             self.display_var.set("Error")
