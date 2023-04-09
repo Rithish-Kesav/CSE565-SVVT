@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <style>
+      .calculator {
+        display: inline-block;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+      }
+
+      #display {
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: right;
+        padding: 5px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+      }
+
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        cursor: pointer;
+      }
+    </style>
+
+    <!-- <link rel="stylesheet" href="styles.css" />
+    <script src="index.js" charset="utf-8"></script> -->
+  </head>
+  <body>
+    <div class="calculator">
+      <input type="text" id="display" readonly />
+      <div class="buttons">
+        <button onclick="onButtonClick('7')">7</button>
+        <button onclick="onButtonClick('8')">8</button>
+        <button onclick="onButtonClick('9')">9</button>
+        <button onclick="onButtonClick('/')">/</button>
+        <button onclick="onButtonClick('4')">4</button>
+        <button onclick="onButtonClick('5')">5</button>
+        <button onclick="onButtonClick('6')">6</button>
+        <button onclick="onButtonClick('*')">*</button>
+        <button onclick="onButtonClick('1')">1</button>
+        <button onclick="onButtonClick('2')">2</button>
+        <button onclick="onButtonClick('3')">3</button>
+        <button onclick="onButtonClick('-')">-</button>
+        <button onclick="onButtonClick('0')">0</button>
+        <button onclick="onButtonClick('.')">.</button>
+        <button onclick="onButtonClick('=')">=</button>
+        <button onclick="onButtonClick('+')">+</button>
+      </div>
+    </div>
+    <script>
+      function onButtonClick(value) {
+        const display = document.getElementById("display");
+
+        if (value === "=") {
+          try {
+            display.value = eval(display.value);
+          } catch (error) {
+            display.value = "Error";
+          }
+        } else {
+          display.value += value;
+        }
+      }
+    </script>
+  </body>
+</html>
