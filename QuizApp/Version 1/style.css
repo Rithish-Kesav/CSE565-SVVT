@@ -83,3 +83,27 @@ form label[for="hard"] {
   display: inline-block;
   margin-right: 10px;
 }
+
+.scrollbar-container {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.scrollbar {
+  -webkit-appearance: none;
+  background-color: #ccc;
+  height: 5px;
+  margin: 10px 0;
+}
+
+.scrollbar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #007bff;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
