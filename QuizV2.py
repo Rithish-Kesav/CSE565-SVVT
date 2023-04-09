@@ -31,6 +31,8 @@ class StartPageV2(ttk.Frame):
         super().__init__(parent)
 
         self.image = tk.PhotoImage(file="start_image.png")
+        # self.image = tk.PhotoImage(width=1, height=1)
+        self.image = self.image.subsample(2, 2)
         self.image_label = ttk.Label(self, image=self.image)
         self.image_label.pack(pady=10)
 
@@ -52,6 +54,9 @@ class QuestionPageV2(ttk.Frame):
         super().__init__(parent)
 
         self.image = tk.PhotoImage(file="question_image.png")
+        # Resize image
+        # reduce the size by a factor of 10
+        self.image = self.image.subsample(10, 10)
         self.image_label = ttk.Label(self, image=self.image)
         self.image_label.pack(pady=10)
 
@@ -89,6 +94,7 @@ class ResultPageV2(ttk.Frame):
         super().__init__(parent)
 
         self.image = tk.PhotoImage(file="results_image.png")
+        self.image = self.image.subsample(15, 15)
         self.image_label = ttk.Label(self, image=self.image)
         self.image_label.pack(pady=10)
 

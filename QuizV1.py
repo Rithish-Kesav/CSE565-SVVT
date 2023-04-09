@@ -31,6 +31,7 @@ class StartPageV1(ttk.Frame):
         super().__init__(parent)
 
         self.image = tk.PhotoImage(file="start_image.png")
+        self.image = self.image.subsample(2, 2)
         self.image_label = ttk.Label(self, image=self.image)
         self.image_label.pack(pady=10)
 
@@ -50,6 +51,13 @@ class StartPageV1(ttk.Frame):
 class QuestionPageV1(ttk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
+
+        self.image = tk.PhotoImage(file="question_image.png")
+        # Resize image
+        # reduce the size by a factor of 10
+        self.image = self.image.subsample(10, 10)
+        self.image_label = ttk.Label(self, image=self.image)
+        self.image_label.pack(pady=10)
 
         self.question_label = ttk.Label(
             self, text="Which color matches the RGB values (255, 0, 0)?")
@@ -84,6 +92,11 @@ class ResultPageV1(ttk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
 
+        self.image = tk.PhotoImage(file="results_image.png")
+        self.image = self.image.subsample(15, 15)
+        self.image_label = ttk.Label(self, image=self.image)
+        self.image_label.pack(pady=10)
+
         self.result_label = ttk.Label(self, text="")
         self.result_label.pack(pady=10)
 
@@ -101,6 +114,10 @@ class ResultPageV1(ttk.Frame):
         self.scrollbar.pack(side="right", fill="y")
         self.text_box.config(yscrollcommand=self.scrollbar.set)
         self.scrollbar.config(command=self.text_box.yview)
+
+        self.listbox = tk.Listbox(self)
+        self.listbox.pack(pady=5)
+        self.listbox.insert("end", "Previous Results:")
 
 
 if __name__ == "__main__":
