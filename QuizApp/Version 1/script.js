@@ -1,6 +1,7 @@
 const resultText = document.getElementById("result-text");
 const restartButton = document.getElementById("restart-button");
-const quizForm = document.getElementById("quiz-form");
+// const quizForm = document.getElementById("quiz-form");
+const quizForm = document.querySelector("quiz-form");
 
 if (resultText) {
   const correctAnswer = "red";
@@ -25,8 +26,15 @@ if (restartButton) {
 if (quizForm) {
   quizForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const answer = document.querySelector('input[name="answer"]:checked').value;
-    localStorage.setItem("answer", answer);
-    location.href = "result.html";
+    const confirmStart = document.querySelector("#confirm-start");
+    if (confirmStart.checked) {
+      localStorage.setItem(
+        "difficulty-level",
+        document.querySelector('input[name="difficulty-level"]:checked').value
+      );
+      location.href = "quiz.html";
+    } else {
+      alert("Please confirm that you are ready to start the quiz.");
+    }
   });
 }
