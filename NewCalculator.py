@@ -28,6 +28,31 @@ class CalculatorApp(tk.Tk):
         self.notebook.add(self.currency_converter_frame,
                           text='Currency Converter')
 
+        # Add buttons to switch between pages
+        self.basic_calc_frame.to_scientific_button = tk.Button(
+            self.basic_calc_frame, text="Scientific Calculator", command=self.show_scientific)
+        self.basic_calc_frame.to_scientific_button.grid(
+            row=6, column=0, columnspan=5)
+
+        self.scientific_calc_frame.to_currency_converter_button = tk.Button(
+            self.scientific_calc_frame, text="Currency Converter", command=self.show_currency_converter)
+        self.scientific_calc_frame.to_currency_converter_button.grid(
+            row=5, column=0, columnspan=6)
+
+        self.currency_converter_frame.to_basic_button = tk.Button(
+            self.currency_converter_frame, text="Basic Calculator", command=self.show_basic)
+        self.currency_converter_frame.to_basic_button.grid(
+            row=2, column=1)
+
+    def show_scientific(self):
+        self.notebook.select(self.scientific_calc_frame)
+
+    def show_currency_converter(self):
+        self.notebook.select(self.currency_converter_frame)
+
+    def show_basic(self):
+        self.notebook.select(self.basic_calc_frame)
+
 
 class BasicCalculatorFrame(tk.Frame):
     def __init__(self, master):
@@ -74,8 +99,8 @@ class BasicCalculatorFrame(tk.Frame):
         self.font_size_slider.grid(row=6, column=3, columnspan=2)
 
         # Listbox for calculation history
-        self.calculation_history_listbox = tk.Listbox(self)
-        self.calculation_history_listbox.grid(row=7, column=0, columnspan=3)
+        # self.calculation_history_listbox = tk.Listbox(self)
+        # self.calculation_history_listbox.grid(row=7, column=0, columnspan=3)
 
     def on_button_click(self, text):
         if text == 'C':
