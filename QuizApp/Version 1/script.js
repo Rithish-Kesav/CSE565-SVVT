@@ -1,7 +1,8 @@
 const resultText = document.getElementById("result-text");
 const restartButton = document.getElementById("restart-button");
+const startForm = document.querySelector("#start-form");
 // const quizForm = document.getElementById("quiz-form");
-const quizForm = document.querySelector("quiz-form");
+const quizForm = document.querySelector("#quiz-form");
 const resultDetails = document.getElementById("result-details");
 const checkbox = document.getElementById("checkbox");
 const slider = document.getElementById("slider");
@@ -9,7 +10,8 @@ const sliderValue = document.getElementById("slider-value");
 
 if (resultText) {
   const correctAnswer = "red";
-  const userAnswer = localStorage.getItem("answer");
+  // const userAnswer = localStorage.getItem("answer");
+  const userAnswer = new URLSearchParams(window.location.search).get("answer");
 
   if (userAnswer === correctAnswer) {
     resultText.textContent =
@@ -37,11 +39,12 @@ slider.addEventListener("input", () => {
   sliderValue.textContent = slider.value;
 });
 
-if (quizForm) {
-  quizForm.addEventListener("submit", (e) => {
+if (startForm) {
+  startForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const confirmStart = document.querySelector("#confirm-start");
     const studentCode = document.querySelector("#student-code").value;
+
     if (confirmStart.checked) {
       localStorage.setItem("student-code", studentCode);
       localStorage.setItem(
@@ -52,5 +55,14 @@ if (quizForm) {
     } else {
       alert("Please confirm that you are ready to start the quiz.");
     }
+  });
+}
+
+if (quizForm) {
+  quizForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const answer = document.querySelector('input[name="answer"]:checked').value;
+    localStorage.setItem("answer", answer);
+    location.href = "result.html";
   });
 }
