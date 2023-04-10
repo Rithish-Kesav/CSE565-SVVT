@@ -41,7 +41,9 @@ if (quizForm) {
   quizForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const confirmStart = document.querySelector("#confirm-start");
+    const studentCode = document.querySelector("#student-code").value;
     if (confirmStart.checked) {
+      localStorage.setItem("student-code", studentCode);
       localStorage.setItem(
         "difficulty-level",
         document.querySelector('input[name="difficulty-level"]:checked').value
