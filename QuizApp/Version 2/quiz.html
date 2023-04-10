@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Quiz App - Version 2</title>
+  </head>
+  <body>
+    <div class="container">
+      <label for="student-code">Enter ASUrite ID:</label>
+      <input type="text" id="student-code" name="student-code" />
+      <br />
+      <img
+        src="question_image.png"
+        alt="Start Image"
+        width="100"
+        height="100"
+      />
+      <h1>Question 1</h1>
+      <p>Which color matches the RGB values (255, 0, 0)?</p>
+      <form id="quiz-form" action="result.html" method="GET">
+        <input type="radio" name="answer" value="red" id="red" required />
+        <label for="red">
+          <span class="color-box" style="background-color: red"></span>
+          Red </label
+        ><br />
+        <input type="radio" name="answer" value="green" id="green" />
+        <label for="green">
+          <span class="color-box" style="background-color: green"></span>
+          Green </label
+        ><br />
+        <input type="radio" name="answer" value="blue" id="blue" />
+        <label for="blue">
+          <span class="color-box" style="background-color: blue"></span>
+          Blue </label
+        ><br />
+        <button type="submit">Submit</button>
+        <p>Please confirm your answer:</p>
+        <input type="checkbox" id="answer-confirm" required />
+        <label for="answer-confirm">I confirm my answer</label><br />
+      </form>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

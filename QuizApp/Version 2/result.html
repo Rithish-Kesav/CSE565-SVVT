@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Quiz App - Version 2</title>
+  </head>
+  <body>
+    <div class="container">
+      <label for="student-code">Enter ASUrite ID:</label>
+      <input type="text" id="student-code" name="student-code" />
+      <br />
+      <img src="results_image.png" alt="Start Image" width="200" />
+      <h1>Quiz Result</h1>
+      <p id="result-text">Your result will be displayed here.</p>
+      <h2>
+        How easy was the question for a range of 1 - 10 with 10 being the
+        easiest
+      </h2>
+      <div class="slider-container" style="width: 250px">
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value="5"
+          id="slider"
+          style="width: 250px"
+        />
+        <span id="slider-value">5</span>
+      </div>
+      <form id="form">
+        <label for="checkbox">Show right Answer:</label>
+        <input type="checkbox" id="checkbox" />
+        <ul id="result-details" style="display: none">
+          <li>Question 1:</li>
+          <span class="answer-box" style="background-color: red"></span>
+        </ul>
+      </form>
+      <button id="restart-button">Restart Quiz</button>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Quiz App - Version 2</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to the Quiz</h1>
+      <img src="start_image.png" alt="Start Image" width="200" />
+      <form id="start-form" action="quiz.html">
+        <label for="difficulty">Select difficulty level:</label>
+        <input
+          type="range"
+          id="difficulty"
+          name="difficulty"
+          min="1"
+          max="3"
+          value="1"
+        />
+        <br />
+        <input type="checkbox" id="confirm-start" required />
+        <label for="confirm-start"
+          >I confirm that I am ready to start the quiz.</label
+        ><br />
+        <button type="submit">Start Quiz</button>
+        <br />
+        <label for="student-code">Enter ASUrite ID:</label>
+        <input type="text" id="student-code" name="student-code" />
+      </form>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
